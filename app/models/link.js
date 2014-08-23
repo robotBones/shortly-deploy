@@ -19,6 +19,4 @@ linksSchema.pre('save', function(){
   this.code = shasum.digest('hex').slice(0,5);
 });
 
-var Link = new mongoose.model('Link', linksSchema);
-
-module.exports = Link;
+var Link = mongoose.model('link', linksSchema);
