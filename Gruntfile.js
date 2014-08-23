@@ -3,6 +3,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      dist: {
+        src: [
+          'public/client/*.js',
+        ],
+        dest: 'public/dist/built.js'
+      },
     },
 
     mochaTest: {
@@ -21,6 +27,10 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      build: {
+        src: 'public/dist/built.js',
+        dest:'public/dist/built-min.js',
+      }
     },
 
     jshint: {
@@ -38,6 +48,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      minify: {
+        src: ['public/style.css'],
+        dest: 'public/dist/style.min.css',
+
+      }
     },
 
     watch: {
@@ -94,7 +109,9 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-  ]);
+      'concat:dist', 'uglify:build', 'cssmin:minify'
+    ]
+  );
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
